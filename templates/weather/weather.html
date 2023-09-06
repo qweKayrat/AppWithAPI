@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="wrap">
+    <div class="block">
+        <div class="elem">
+            <h2>Погода в вашем городе</h2>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.name }}
+                <input type="submit" name="send" value="Узнать" class="but">
+            </form>
+        </div>
+        <div class="elem">
+            <h2>Информация</h2>
+            {% for info in all_info %}
+            <form action="{% url 'deletecity' info.city_pk %}" class="x" method="post">
+                {% csrf_token %}
+                <input type="submit" value="X" class="remove">
+            </form>
+            <div class="info">
+                <p class="data">
+                    <b>Город:</b> {{ info.city }}<br><br>
+                    <b>Температура:</b> {{ info.temp }}<small><sup>o</sup></small>
+                </p>
+                <p><img src="{{ info.icon }}"></p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
